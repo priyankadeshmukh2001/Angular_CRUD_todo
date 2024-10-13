@@ -1,0 +1,102 @@
+<div class="container mt-2">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a href="#add-user-tab" class="nav-link active" id="add-user-tab" (click)="setActiveTab('addTask')" role="tab" aria-controls="add-user">Add Task</a>
+      </li>
+      <li class="nav-item">
+        <a href="#list-tab" class="nav-link" id="list-tab" (click)="setActiveTab('list')" role="tab" aria-controls="list">List</a>
+      </li>
+    </ul>
+    
+    <div class="tab-content" id="myTabcontent">
+      <!-- Add Task Form -->
+      <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 'addTask'}" id="add-user-tab-content" role="tabpanel" aria-labelledby="add-user-tab">
+        <div class="card">
+          <div class="card-header">
+            <h6>New Task</h6>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="userForm" (ngSubmit)="SubmitForm()">
+              <div class="row mb-2">
+                <div class="col-md-6">
+                  <label for="assignedTo" class="form-label">Assigned To</label>
+                  <select class="form-select form-select-sm" id="assignedTo" formControlName="assignedTo" required>
+                    <option value="">Select User</option>
+                    <option value="User 1">User 1</option>
+                    <option value="User 2">User 2</option>
+                    <option value="User 3">User 3</option>
+                    <option value="User 4">User 4</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="status" class="form-label">Status</label>
+                  <select class="form-select form-select-sm" id="status" formControlName="status" required>
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </div>
+              </div>
+    
+              <div class="row mb-2">
+                <div class="col-md-6">
+                  <label for="dueDate" class="form-label">Due Date</label>
+                  <input type="date" class="form-control form-control-sm" id="dueDate" formControlName="dueDate" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="priority" class="form-label">Priority</label>
+                  <select class="form-select form-select-sm" id="priority" formControlName="priority" required>
+                    <option value="Low">Low</option>
+                    <option value="Normal">Normal</option>
+                    <option value="High">High</option>
+                  </select>
+                </div>
+              </div>
+    
+              <div class="row mb-2">
+                <div class="col-md-12">
+                  <label for="description" class="form-label">Description</label>
+                  <textarea class="form-control form-control-sm" id="description" rows="2" formControlName="description" placeholder="Enter task details"></textarea>
+                </div>
+              </div>
+    
+              <div class="d-flex justify-content-end">
+                <button type="reset" class="btn btn-secondary btn-sm me-2">Reset</button>
+                <button type="submit" class="btn btn-success btn-sm">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    
+      <!-- List of Tasks -->
+      <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 'list'}" id="list-tab-content" role="tabpanel" aria-labelledby="list-tab">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Assigned To</th>
+              <th>Status</th>
+              <th>Due Date</th>
+              <th>Priority</th>
+              <th>Comments</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of users; let i = index">
+              <td>{{ item.assignedTo }}</td>
+              <td>{{ item.status }}</td>
+              <td>{{ item.dueDate }}</td>
+              <td>{{ item.priority }}</td>
+              <td>{{ item.description }}</td>
+              <td>
+                <button class="btn btn-warning m-2" (click)="GetUserById(item.id)">Edit</button>
+                <button class="btn btn-danger m-2" (click)="DeleteUserById(item.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
